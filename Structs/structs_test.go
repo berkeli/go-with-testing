@@ -12,7 +12,17 @@ func TestPerimeter(t *testing.T) {
 }
 
 func TestArea(t *testing.T) {
-	checkArea := func(t *testing.TB, shape Shape, want float64) {
+
+	areaTests := []struct {
+		shape Shape
+		want  float64
+	}{
+		{Rectangle{12, 6}, 72.0},
+		{Circle{10}, 314.1592653589793},
+		{Triangle{12, 6}, 36.0},
+	}
+
+	checkArea := func(t *testing.T, shape Shape, want float64) {
 		t.Helper()
 		got := shape.Area()
 		if got != want {
@@ -20,16 +30,9 @@ func TestArea(t *testing.T) {
 		}
 	}
 
-	t.Run("Area of 12x6 Rectangle", func(t *testing.T) {
-		rect := Rectangle{12.0, 6.0}
-		checkArea(t, rect, 72.0)
-	})
-
-	t.Run("area of a circle", func(t *testing.T) {
-		circle := Circle{10}
-		want := 314.1592653589793
-		checkArea(t, circle, want)
-	})
+	for _, tt := range areaTests {
+		checkArea(t, tt.shape, tt.want)
+	}
 }
 
 func assertMessageF(t *testing.T, got, want float64) {
