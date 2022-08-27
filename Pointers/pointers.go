@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+var ErrInsufficientFunds = errors.New("no enough funds, withdrawal declined")
+
 type Bitcoin int
 
 type Stringer interface {
@@ -20,8 +22,8 @@ func (w *Wallet) Deposit(amount Bitcoin) {
 }
 
 func (w *Wallet) Withdraw(amount Bitcoin) error {
-	if w.balance < amount {
-		return errors.New("Not enogh money")
+	if amount > w.balance {
+		return ErrInsufficientFunds
 	}
 	w.balance -= amount
 	return nil
