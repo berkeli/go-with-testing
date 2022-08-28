@@ -1,3 +1,3 @@
-module hello
+module HelloWorld
 
 go 1.19
